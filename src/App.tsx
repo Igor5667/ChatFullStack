@@ -20,6 +20,8 @@ function App() {
   const [nickname, setNickname] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
 
+  const [counter, setCounter] = useState<number>(0);
+
   useEffect(() => {
     socket.connect();
 
@@ -28,7 +30,12 @@ function App() {
     });
 
     socket.on("get:message", (message) => {
+      if (counter >= 1) {
+        return;
+      }
+      console.log(message);
       setMessages((messages) => [...messages, message]);
+      setCounter(counter + 1);
     });
 
     return () => {
