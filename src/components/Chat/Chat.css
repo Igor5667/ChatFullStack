@@ -1,0 +1,32 @@
+.chat-container {
+  width: 50%;
+  padding: 5px;
+  margin: 20px 0;
+}
+
+.message-container {
+  display: flex;
+  padding: 2px;
+}
+.message {
+  width: fit-content;
+  border: solid black 1px;
+  border-radius: 10px;
+  padding: 4px;
+  max-width: 80%;
+}
+
+/* messages from this user */
+.my-container {
+  justify-content: flex-end;
+}
+.my-message {
+  background-color: rgb(80, 232, 252);
+}
+/* messages from other users */
+.not-my-container {
+  justify-content: flex-start;
+}
+.not-my-message {
+  background-color: rgb(51, 177, 250);
+}

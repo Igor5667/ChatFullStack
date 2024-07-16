@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import { socket } from "./socket";
+import { socket } from "./service/socket";
 import axios from "axios";
-import MessageForm from "./Components/MessageForm/MessageForm";
 
-interface Message {
+import MessageForm from "./components/MessageForm/MessageForm";
+import Chat from "./components/Chat/Chat";
+
+export interface Message {
   userId: string;
   message: string;
 }
@@ -62,23 +64,8 @@ function App() {
     <div className="main-container">
       <div className="container">
         <h1>WamaChat</h1>
-        <div className="chat-container">
-          {messages.map((message, index) => {
-            let classValueContainer: string = "not-my-container";
-            let classValueMessage: string = "not-my-message";
-            if (message.userId === "chuj") {
-              classValueContainer = "my-container";
-              classValueMessage = "my-message";
-            }
-            return (
-              <div className={"message-container " + classValueContainer}>
-                <div key={index} className={"message " + classValueMessage}>
-                  {message.message}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+
+        <Chat messages={messages} />
 
         <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
       </div>
