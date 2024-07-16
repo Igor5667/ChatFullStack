@@ -8,18 +8,17 @@ import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 
 export interface Message {
-  userId: string;
-  message: string;
+  nickname: string;
+  content: string;
+  sendDate: string;
 }
 
 function App() {
-  const [messages, setMessages] = useState<Message[]>([
-    { userId: "chuj", message: "siemka co tam" },
-    { userId: "nie chuj", message: "a chuj ci na maske" },
-  ]);
   const [newMessage, setNewMessage] = useState<string>("");
   const [token, setToken] = useState<string>("");
   const [isRegisterPage, setIsRegisterPage] = useState<boolean>(false);
+  const [nickname, setNickname] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     socket.connect();
@@ -29,7 +28,7 @@ function App() {
     });
 
     socket.on("get:message", (message) => {
-      setMessages(() => [...messages, message]);
+      setMessages((messages) => [...messages, message]);
     });
 
     return () => {
@@ -39,8 +38,8 @@ function App() {
 
   const sendMessage = () => {
     if (newMessage.trim() !== "") {
-      socket.emit("send:message", { userId: "chuj", message: newMessage });
-      setMessages(() => [...messages, { userId: "chuj", message: newMessage }]);
+      console.log({ nickname: nickname, content: newMessage });
+      socket.emit("send:message", { nickname: nickname, content: newMessage, sendDate: "to jest data" });
       setNewMessage("");
     }
   };
@@ -51,18 +50,22 @@ function App() {
         <h1>WamaChat</h1>
         {token ? (
           <>
-            <Chat messages={messages} />
+            <Chat messages={messages} nickname={nickname} />
             <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
           </>
         ) : (
           <>
-            {isRegisterPage ? <RegisterPage setIsRegisterPage={setIsRegisterPage} /> : <LoginPage setToken={setToken} />}
+            {isRegisterPage ? (
+              <RegisterPage setIsRegisterPage={setIsRegisterPage} />
+            ) : (
+              <LoginPage setToken={setToken} setNickname={setNickname} />
+            )}
             {isRegisterPage ? (
               <p className="login-or-register-button">
                 Do you have an account? <a onClick={() => setIsRegisterPage(!isRegisterPage)}>logIn</a>
               </p>
             ) : (
-              <p className="login-or-register-button" onClick={() => setIsRegisterPage(!isRegisterPage)}>
+              <p className="login-or-register-button">
                 Don't you have an account? <a onClick={() => setIsRegisterPage(!isRegisterPage)}>Register</a>
               </p>
             )}

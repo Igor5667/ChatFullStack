@@ -8,10 +8,7 @@ interface Register {
 }
 
 function RegisterPage({ setIsRegisterPage }: { setIsRegisterPage: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const [registerData, setRegisterData] = useState<Register>({
-    nickname: Math.random().toString(),
-    password: "siema",
-  });
+  const [registerData, setRegisterData] = useState<Register>({ nickname: "", password: "" });
 
   const register = async () => {
     try {
@@ -24,8 +21,18 @@ function RegisterPage({ setIsRegisterPage }: { setIsRegisterPage: React.Dispatch
   return (
     <>
       <h3>Registration</h3>
-      <input type="text" className="inputRegister" />
-      <input type="password" className="inputRegister" />
+      <input
+        type="text"
+        className="inputRegister"
+        value={registerData.nickname}
+        onChange={(e) => setRegisterData({ ...registerData, nickname: e.target.value })}
+      />
+      <input
+        type="password"
+        className="inputRegister"
+        value={registerData.password}
+        onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
+      />
       <button onClick={register}>Register</button>
     </>
   );
