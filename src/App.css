@@ -16,3 +16,11 @@ body {
   align-items: center;
   height: 100%;
 }
+.login-or-register-button {
+  font-size: 10px;
+}
+a {
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+}

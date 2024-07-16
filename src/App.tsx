@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { socket } from "./service/socket";
-import axios from "axios";
 
 import MessageForm from "./components/MessageForm/MessageForm";
 import Chat from "./components/Chat/Chat";
+import LoginPage from "./pages/Login/LoginPage";
+import RegisterPage from "./pages/Register/RegisterPage";
 
 export interface Message {
   userId: string;
   message: string;
-}
-
-interface Login {
-  nickname: string;
-  password: string;
 }
 
 function App() {
@@ -21,11 +17,9 @@ function App() {
     { userId: "chuj", message: "siemka co tam" },
     { userId: "nie chuj", message: "a chuj ci na maske" },
   ]);
-  const [newMessage, setNewMessage] = useState("");
-  const [login, setLogin] = useState<Login>({
-    nickname: "Igor",
-    password: "siema",
-  });
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [token, setToken] = useState<string>("");
+  const [isRegisterPage, setIsRegisterPage] = useState<boolean>(false);
 
   useEffect(() => {
     socket.connect();
@@ -51,23 +45,29 @@ function App() {
     }
   };
 
-  const logIn = async () => {
-    try {
-      const response = await axios.post("http://172.16.61.119:3000", login);
-      console.log("Response:", response.data);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   return (
     <div className="main-container">
       <div className="container">
         <h1>WamaChat</h1>
-
-        <Chat messages={messages} />
-
-        <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
+        {token ? (
+          <>
+            <Chat messages={messages} />
+            <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
+          </>
+        ) : (
+          <>
+            {isRegisterPage ? <RegisterPage setIsRegisterPage={setIsRegisterPage} /> : <LoginPage setToken={setToken} />}
+            {isRegisterPage ? (
+              <p className="login-or-register-button">
+                Do you have an account? <a onClick={() => setIsRegisterPage(!isRegisterPage)}>logIn</a>
+              </p>
+            ) : (
+              <p className="login-or-register-button" onClick={() => setIsRegisterPage(!isRegisterPage)}>
+                Don't you have an account? <a onClick={() => setIsRegisterPage(!isRegisterPage)}>Register</a>
+              </p>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
