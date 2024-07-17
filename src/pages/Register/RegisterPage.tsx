@@ -19,7 +19,12 @@ function RegisterPage({ setIsRegisterPage }: { setIsRegisterPage: React.Dispatch
     }
   };
   return (
-    <>
+    <form
+      className="login-or-registration-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <h3>Registration</h3>
       <input
         type="text"
@@ -33,8 +38,8 @@ function RegisterPage({ setIsRegisterPage }: { setIsRegisterPage: React.Dispatch
         value={registerData.password}
         onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
       />
-      <button onClick={register}>Register</button>
-    </>
+      <button onClick={register}>SignIn</button>
+    </form>
   );
 }
 

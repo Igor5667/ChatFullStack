@@ -1,20 +1,18 @@
 import "./Chat.css";
 import { Message } from "../../App";
-import MessageBox from "./MessageBox";
+import MyMessageBox from "./MyMessageBox";
+import "bootstrap/dist/css/bootstrap.min.css";
+import OthersMessageBox from "./OthersMessageBox";
 
 function Chat({ messages, nickname }: { messages: Message[]; nickname: string }) {
   return (
-    <div className="chat-container">
+    <div className="scroll-area">
       {messages.map((message, index) => {
-        let classValueContainer: string = "not-my-container";
-        let classValueMessage: string = "not-my-message";
         if (message.nickname === nickname) {
-          classValueContainer = "my-container";
-          classValueMessage = "my-message";
+          return <MyMessageBox message={message} index={index} />;
+        } else {
+          return <OthersMessageBox message={message} index={index} />;
         }
-        return (
-          <MessageBox classValueContainer={classValueContainer} classValueMessage={classValueMessage} message={message} index={index} />
-        );
       })}
     </div>
   );

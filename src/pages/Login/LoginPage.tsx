@@ -30,7 +30,12 @@ function LoginPage({ setToken, setNickname }: LoginFunctions) {
     }
   };
   return (
-    <>
+    <form
+      className="login-or-registration-form"
+      onSubmit={(e) => {
+        e.preventDefault();
+      }}
+    >
       <h3>Logination</h3>
       <input
         type="text"
@@ -44,8 +49,8 @@ function LoginPage({ setToken, setNickname }: LoginFunctions) {
         value={loginData.password}
         onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
       />
-      <button onClick={logIn}>Zaloguj</button>
-    </>
+      <button onClick={logIn}>LogIn</button>
+    </form>
   );
 }
 

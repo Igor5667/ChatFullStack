@@ -7,12 +7,15 @@ interface ChatFormProps {
 function MessageForm({ newMessage, setNewMessage, sendMessage }: ChatFormProps) {
   return (
     <form
+      className="flex align-items-center"
       onSubmit={(e) => {
         e.preventDefault();
       }}
     >
       <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
-      <button onClick={sendMessage}>Send</button>
+      <button className="btn-primary" onClick={sendMessage}>
+        Send
+      </button>
     </form>
   );
 }
