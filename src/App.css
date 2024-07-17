@@ -1,6 +1,9 @@
 * {
   font-family: "Poppins", sans-serif;
 }
+html {
+  background-color: #333333;
+}
 .header {
   font-family: "Playwrite DK Uloopet";
   background-color: #1f1f1f;
@@ -9,4 +12,8 @@
 }
 .chat-container {
   background-color: #333333;
+}
+.link {
+  color: blue;
+  text-decoration: underline;
 }

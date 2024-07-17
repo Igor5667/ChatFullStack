@@ -49,7 +49,9 @@ function LoginPage({ setToken, setNickname }: LoginFunctions) {
         value={loginData.password}
         onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
       />
-      <button onClick={logIn}>LogIn</button>
+      <button className="btn btn-outline-dark" onClick={logIn}>
+        LogIn
+      </button>
     </form>
   );
 }
