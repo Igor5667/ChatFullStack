@@ -7,6 +7,7 @@ import MessageForm from "./components/MessageForm/MessageForm";
 import Chat from "./components/Chat/Chat";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 export interface Message {
   nickname: string;
@@ -54,25 +55,15 @@ function App() {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid p-0">
       {token ? (
         <div className="container-fluid">
-          <div className="row ">
+          <div className="header  row">
             <h1 className="text-center my-3">WamaChat</h1>
           </div>
           <div className="row ">
-            <div className="col-12 col-md-3 bg-light p-3" id="sidebar">
-              <h2>Friends</h2>
-              <ul>
-                <li>Hubert</li>
-                <li>Kuba</li>
-              </ul>
-              <h2>Chats</h2>
-              <ul>
-                <li>Hubert, Kuba</li>
-              </ul>
-            </div>
-            <div className="col-12 col-md-9 p-3" id="chat-container">
+            <Sidebar />
+            <div className="chat-container  col-12 col-md-9 p-3">
               <Chat messages={messages} nickname={nickname} />
               <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
             </div>
@@ -99,29 +90,6 @@ function App() {
           )}
         </>
       )}
-
-      {/* <div className="container-fluid">
-        <div className="row ">
-          <h1 className="text-center my-3">WamaChat</h1>
-        </div>
-        <div className="row ">
-          <div className="col-12 col-md-3 bg-light p-3" id="sidebar">
-            <h2>Friends</h2>
-            <ul>
-              <li>Hubert</li>
-              <li>Kuba</li>
-            </ul>
-            <h2>Chats</h2>
-            <ul>
-              <li>Hubert, Kuba</li>
-            </ul>
-          </div>
-          <div className="col-12 col-md-9 p-3" id="chat-container">
-            <Chat messages={messages} nickname={nickname} />
-            <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

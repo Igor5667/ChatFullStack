@@ -1,3 +1,5 @@
+import "./MessageForm.css";
+
 interface ChatFormProps {
   newMessage: string;
   setNewMessage: React.Dispatch<React.SetStateAction<string>>;
@@ -7,13 +9,13 @@ interface ChatFormProps {
 function MessageForm({ newMessage, setNewMessage, sendMessage }: ChatFormProps) {
   return (
     <form
-      className="flex align-items-center"
+      className="d-flex justify-content-center"
       onSubmit={(e) => {
         e.preventDefault();
       }}
     >
-      <input type="text" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
-      <button className="btn-primary" onClick={sendMessage}>
+      <input type="text" className="form-control fn-1" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
+      <button className="btn btn-dark ms-4" onClick={sendMessage}>
         Send
       </button>
     </form>
