@@ -20,9 +20,8 @@ function LoginPage({ setToken, setNickname }: LoginFunctions) {
 
   const logIn = async () => {
     try {
-      console.log("loginData: ");
-      console.log(loginData);
       const response = await axios.post("http://172.16.61.119:3000/user/login", loginData);
+      console.log(response.data);
       setToken(response.data.token);
       setNickname(loginData.nickname);
     } catch (error) {

@@ -6,7 +6,4 @@ export const socket = io(URL, {
   reconnection: true,
   reconnectionAttempts: 5,
   reconnectionDelay: 1000,
-  extraHeaders: {
-    "X-Custom-Header": "CustomHeaderValue",
-  },
 });

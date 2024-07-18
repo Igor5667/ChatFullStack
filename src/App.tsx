@@ -20,6 +20,12 @@ export interface User {
   nickname: string;
 }
 
+// handle data aby sie wyswietlala tylko godzina i minuta jezeli to dzisij
+// wyswietla sie dzien tygodnia jezeli to ten tydzien
+// wyswietla sie dały date jezeli ponad tydzien
+
+// zrobic zeby getem pobieralo restAPIm load
+
 function App() {
   const [newMessage, setNewMessage] = useState<string>("");
   const [token, setToken] = useState<string>("");
@@ -31,12 +37,11 @@ function App() {
   useEffect(() => {
     socket.connect();
 
-    socket.on("load:message", (laodData) => {
-      console.log("to otrzymuję z loada");
-      console.log(laodData);
-      setMessages(laodData.messages);
-      setUsers(laodData.users);
-    });
+    // socket.on("load:message", (laodData) => {
+    //   console.log("to otrzymuję z loada");
+    //   console.log(laodData);
+    //   setUsers(laodData);
+    // });
 
     socket.on("get:message", (message) => {
       setMessages((messages) => [...messages, message]);
