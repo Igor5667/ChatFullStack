@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import "./Chat.css";
 import { Message } from "../../App";
 
-interface MessageBox {
-  message: Message;
-  index: number;
-}
-
-function OthersMessageBox({ message, index }: MessageBox) {
+function OthersMessageBox({ message }: { message: Message }) {
   const [isShownDate, setIsShownDate] = useState<boolean>(false);
 
   return (
@@ -17,12 +12,7 @@ function OthersMessageBox({ message, index }: MessageBox) {
         {isShownDate && <span>{message.sendDate}</span>}
       </div>
 
-      <div
-        key={index}
-        onMouseOver={() => setIsShownDate(true)}
-        onMouseOut={() => setIsShownDate(false)}
-        className={"message other-message "}
-      >
+      <div onMouseOver={() => setIsShownDate(true)} onMouseOut={() => setIsShownDate(false)} className={"message other-message "}>
         {message.content}
       </div>
     </div>

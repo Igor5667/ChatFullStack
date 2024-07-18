@@ -11,9 +11,10 @@ interface Sidebar {
   setIsChatChoosen: React.Dispatch<React.SetStateAction<boolean>>;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   setCurrentRoomToken: React.Dispatch<React.SetStateAction<string>>;
+  nickname: string;
 }
 
-function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken }: Sidebar) {
+function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken, nickname }: Sidebar) {
   let friends: Room[] = [];
   let groups: Room[] = [];
   for (let room of rooms) {
@@ -28,15 +29,12 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken }: 
     setIsChatChoosen(true);
     setCurrentRoomToken(roomToken);
     const response = await axios.post("http://172.16.61.119:3000/user/load-messages", { token: roomToken });
-
-    console.log("TO JE RESPONSE");
-    console.log(response.data);
     setMessages(response.data);
   };
 
   return (
     <div className="sidebar  col-12 col-md-3 p-3 d-flex flex-column">
-      <AddFriend />
+      <AddFriend nickname={nickname} />
       <NewGroup />
 
       <div className="ms-3 mt-2">

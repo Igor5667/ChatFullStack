@@ -9,9 +9,9 @@ function Chat({ messages, nickname }: { messages: Message[]; nickname: string })
     <div className="scroll-area">
       {messages.map((message, index) => {
         if (message.nickname === nickname) {
-          return <MyMessageBox message={message} index={index} />;
+          return <MyMessageBox message={message} key={index} />;
         } else {
-          return <OthersMessageBox message={message} index={index} />;
+          return <OthersMessageBox message={message} key={index} />;
         }
       })}
     </div>

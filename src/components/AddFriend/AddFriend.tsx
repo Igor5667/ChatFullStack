@@ -1,8 +1,20 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
+import { socket } from "../../service/socket";
 
-function AddFriend() {
+function AddFriend({ nickname }: { nickname: string }) {
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+
+  const makeFriend = () => {
+    const friendData = {
+      name: "",
+      usersArray: [nickname, name],
+    };
+    socket.emit("create:room", friendData);
+    console.log(friendData);
+    setIsFormShown(false);
+  };
 
   return (
     <>
@@ -12,9 +24,9 @@ function AddFriend() {
 
       {isFormShown && (
         <div className="input-group mb-5">
-          <input type="text" className="form-control" placeholder="Name" />
+          <input type="text" className="form-control" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
 
-          <button className="btn btn-outline-secondary" type="button" id="button-addon2">
+          <button className="btn btn-outline-secondary" type="button" onClick={makeFriend}>
             Add
           </button>
         </div>

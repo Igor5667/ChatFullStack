@@ -47,6 +47,7 @@ function App() {
     // });
 
     socket.on("get:message", (message) => {
+      console.log(message);
       setMessages((messages) => [...messages, message]);
     });
 
@@ -60,7 +61,7 @@ function App() {
       const messageData = { nickname: nickname, content: newMessage, token: currentRoomToken };
       console.log(messageData);
       socket.emit("send:message", messageData);
-      setMessages((messages) => [...messages, { nickname: "Igor", content: newMessage, sendDate: "" }]);
+      // setMessages((messages) => [...messages, { nickname: "Igor", content: newMessage, sendDate: "" }]);
       setNewMessage("");
     }
   };
@@ -78,6 +79,7 @@ function App() {
               setIsChatChoosen={setIsChatChoosen}
               setMessages={setMessages}
               setCurrentRoomToken={setCurrentRoomToken}
+              nickname={nickname}
             />
             <div className="chat-container  col-12 col-md-9 p-3">
               {isChatChoosen ? (
