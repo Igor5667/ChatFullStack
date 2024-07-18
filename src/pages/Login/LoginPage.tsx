@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import "./LoginPage.css";
+import { Room } from "../../App";
 
 interface LoginData {
   nickname: string;
@@ -9,10 +10,11 @@ interface LoginData {
 
 interface LoginFunctions {
   setToken: React.Dispatch<React.SetStateAction<string>>;
+  setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
   setNickname: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function LoginPage({ setToken, setNickname }: LoginFunctions) {
+function LoginPage({ setToken, setRooms, setNickname }: LoginFunctions) {
   const [loginData, setLoginData] = useState<LoginData>({
     nickname: "",
     password: "",
@@ -21,9 +23,9 @@ function LoginPage({ setToken, setNickname }: LoginFunctions) {
   const logIn = async () => {
     try {
       const response = await axios.post("http://172.16.61.119:3000/user/login", loginData);
-      console.log(response.data);
-      setToken(response.data.token);
+      setRooms(response.data.rooms);
       setNickname(loginData.nickname);
+      setToken(response.data.token);
     } catch (error) {
       console.error("Error:", error);
     }

@@ -3,7 +3,8 @@
   color: white;
   border-right: solid #5c5c5c 3px;
 }
-.sidebar .fiernds-list li {
+.sidebar li {
   list-style-type: georgian;
   font-size: 1.15em;
+  cursor: pointer;
 }

@@ -1,10 +1,39 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Sidebar.css";
-import { User } from "../../App";
+import { Room } from "../../App";
+import { Message } from "../../App";
 import AddFriend from "../AddFriend/AddFriend";
 import NewGroup from "../NewGroup/NewGroup";
+import axios from "axios";
 
-function Sidebar({ users }: { users: User[] }) {
+interface Sidebar {
+  rooms: Room[];
+  setIsChatChoosen: React.Dispatch<React.SetStateAction<boolean>>;
+  setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  setCurrentRoomToken: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken }: Sidebar) {
+  let friends: Room[] = [];
+  let groups: Room[] = [];
+  for (let room of rooms) {
+    if (room.isGroup === true) {
+      groups.push(room);
+    } else {
+      friends.push(room);
+    }
+  }
+
+  const sendToken = async (roomToken: string) => {
+    setIsChatChoosen(true);
+    setCurrentRoomToken(roomToken);
+    const response = await axios.post("http://172.16.61.119:3000/user/load-messages", { token: roomToken });
+
+    console.log("TO JE RESPONSE");
+    console.log(response.data);
+    setMessages(response.data);
+  };
+
   return (
     <div className="sidebar  col-12 col-md-3 p-3 d-flex flex-column">
       <AddFriend />
@@ -13,13 +42,23 @@ function Sidebar({ users }: { users: User[] }) {
       <div className="ms-3 mt-2">
         <h2>Friends</h2>
         <ul className="fiernds-list">
-          {users.map((user) => {
-            return <li key={user.id}>{user.nickname}</li>;
+          {friends.map((friend, index) => {
+            return (
+              <li key={index} onClick={() => sendToken(friend.token)}>
+                {friend.name}
+              </li>
+            );
           })}
         </ul>
         <h2>Groups</h2>
         <ul>
-          <li>Papieżaki</li>
+          {groups.map((group, index) => {
+            return (
+              <li key={index} onClick={() => sendToken(group.token)}>
+                {group.name}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

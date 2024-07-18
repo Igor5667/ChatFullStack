@@ -54,7 +54,7 @@ function NewGroup() {
                       }}
                       key={index}
                     >
-                      {user} chuj
+                      {user}
                     </li>
                   ))}
                   {usersToSend.map((user) => (
