@@ -74,7 +74,7 @@ function App() {
         const start = element.scrollTop;
         const end = element.scrollHeight;
         const distance = end - start;
-        const duration = 500;
+        const duration = 300;
         let startTime: number | null = null;
 
         const animateScroll = (currentTime: number) => {
@@ -93,7 +93,6 @@ function App() {
       }
     }, 0);
   };
-
   return (
     <div className="container-fluid p-0">
       {token ? (
@@ -110,17 +109,18 @@ function App() {
               setMessages={setMessages}
               setCurrentRoom={setCurrentRoom}
               myNickname={myNickname}
+              scrollToBottom={scrollToBottom}
             />
             <div className="chat-container  col-12 col-md-9">
               <ChatNav currentRoom={currentRoom} />
               {isChatChoosen ? (
                 <>
                   <Chat messages={messages} myNickname={myNickname} />
+                  <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
                 </>
               ) : (
                 <h1 className="chat-place-holder text-center p-5">Choose the chat</h1>
               )}
-              <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
             </div>
           </div>
         </div>

@@ -30,6 +30,7 @@ function LoginPage({ setToken, setRooms, setMyNickname }: LoginFunctions) {
       console.error("Error:", error);
     }
   };
+
   return (
     <form
       className="login-or-registration-form"
@@ -40,12 +41,14 @@ function LoginPage({ setToken, setRooms, setMyNickname }: LoginFunctions) {
       <h3>Logination</h3>
       <input
         type="text"
+        placeholder="login"
         className="inputLogin"
         value={loginData.nickname}
         onChange={(e) => setLoginData({ ...loginData, nickname: e.target.value })}
       />
       <input
         type="password"
+        placeholder="password"
         className="inputLogin"
         value={loginData.password}
         onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}

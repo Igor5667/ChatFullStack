@@ -3,7 +3,7 @@ import { IoPersonAdd } from "react-icons/io5";
 import { useState } from "react";
 import axios from "axios";
 
-function AddFriend({ myNickname }: { myNickname: string }) {
+function AddFriend({ myNickname, pushToFriends }: { myNickname: string; pushToFriends: (newFriend: any) => void }) {
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
 
@@ -14,6 +14,7 @@ function AddFriend({ myNickname }: { myNickname: string }) {
     };
     const response = await axios.post("http://172.16.61.119:3000/room/create-room", friendData);
     console.log(response.data);
+    pushToFriends(response.data[response.data.length - 1]);
     setIsFormShown(false);
     setName("");
   };

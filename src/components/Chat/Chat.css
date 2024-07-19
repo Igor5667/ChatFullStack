@@ -4,6 +4,7 @@
   height: 72vh;
   color: white;
   padding: 0 40px;
+  scrollbar-width: none;
 }
 .message {
   padding: 8px;
@@ -18,4 +19,7 @@
   background-color: #5c5c5c;
   color: white;
   border-top-left-radius: 0;
+}
+.scroll-area::-webkit-scrollbar {
+  display: none;
 }
