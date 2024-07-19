@@ -6,12 +6,13 @@ html {
 }
 .header {
   font-family: "Playwrite DK Uloopet";
-  background-color: #1f1f1f;
+  background-color: #292929;
   color: white;
   border-bottom: solid #5c5c5c 3px;
 }
 .chat-container {
   background-color: #333333;
+  padding: 0;
 }
 .link {
   color: blue;

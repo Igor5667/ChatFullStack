@@ -1,0 +1,8 @@
+.chat-nav {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.8em;
+  color: white;
+  border-bottom: solid #5c5c5c 3px;
+  padding: 10px 20px;
+}

@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { HiMiniUserGroup } from "react-icons/hi2";
 import "./NewGroup.css";
 import { useState } from "react";
 
@@ -25,7 +26,10 @@ function NewGroup() {
   return (
     <>
       <button className="btn btn-outline-light btn-lg  mx-auto mb-4" onClick={() => setIsFormShown(!isFormShown)}>
-        New Group <span className="ms-2">{isFormShown ? "-" : "+"}</span>
+        New Group{" "}
+        <span className="ms-2">
+          <HiMiniUserGroup />
+        </span>
       </button>
 
       {isFormShown && (
@@ -43,32 +47,39 @@ function NewGroup() {
               placeholder="Friends"
             />
 
-            {isListShown ? (
+            {isListShown && (
               <div className="scroll-area w-75">
                 <ul className="list-group">
-                  {filteredUsers.map((user, index) => (
-                    <li
-                      className="list-group-item list-group-item-action"
-                      onClick={() => {
-                        handleListItem(user);
-                      }}
-                      key={index}
-                    >
-                      {user}
-                    </li>
-                  ))}
-                  {usersToSend.map((user) => (
-                    <li className="list-group-item list-group-item-dark">{user}</li>
-                  ))}
+                  {filteredUsers.map((user, index) => {
+                    if (usersToSend.includes(user)) {
+                      console.log(usersToSend);
+                      return;
+                    }
+                    return (
+                      <li
+                        className="list-group-item list-group-item-action"
+                        onClick={() => {
+                          handleListItem(user);
+                        }}
+                        key={index}
+                      >
+                        {user}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
-            ) : (
-              <ul>
-                {usersToSend.map((user) => (
-                  <li>{user}</li>
-                ))}
-              </ul>
             )}
+
+            <ul>
+              {usersToSend.map((user) => (
+                <li>{user}</li>
+              ))}
+            </ul>
+            <div className="d-flex space-between w-100">
+              <button>Back</button>
+              <button>Add</button>
+            </div>
           </div>
         </div>
       )}

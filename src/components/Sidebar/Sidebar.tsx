@@ -10,11 +10,11 @@ interface Sidebar {
   rooms: Room[];
   setIsChatChoosen: React.Dispatch<React.SetStateAction<boolean>>;
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
-  setCurrentRoomToken: React.Dispatch<React.SetStateAction<string>>;
-  nickname: string;
+  setCurrentRoom: React.Dispatch<React.SetStateAction<Room>>;
+  myNickname: string;
 }
 
-function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken, nickname }: Sidebar) {
+function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickname }: Sidebar) {
   let friends: Room[] = [];
   let groups: Room[] = [];
   for (let room of rooms) {
@@ -25,16 +25,16 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken, ni
     }
   }
 
-  const sendToken = async (roomToken: string) => {
+  const sendToken = async (room: any) => {
     setIsChatChoosen(true);
-    setCurrentRoomToken(roomToken);
-    const response = await axios.post("http://172.16.61.119:3000/user/load-messages", { token: roomToken });
+    setCurrentRoom(room);
+    const response = await axios.post("http://172.16.61.119:3000/user/load-messages", { token: room.token });
     setMessages(response.data);
   };
 
   return (
     <div className="sidebar  col-12 col-md-3 p-3 d-flex flex-column">
-      <AddFriend nickname={nickname} />
+      <AddFriend myNickname={myNickname} />
       <NewGroup />
 
       <div className="ms-3 mt-2">
@@ -42,7 +42,7 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken, ni
         <ul className="fiernds-list">
           {friends.map((friend, index) => {
             return (
-              <li key={index} onClick={() => sendToken(friend.token)}>
+              <li key={index} onClick={() => sendToken(friend)}>
                 {friend.name}
               </li>
             );
@@ -52,7 +52,7 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoomToken, ni
         <ul>
           {groups.map((group, index) => {
             return (
-              <li key={index} onClick={() => sendToken(group.token)}>
+              <li key={index} onClick={() => sendToken(group)}>
                 {group.name}
               </li>
             );

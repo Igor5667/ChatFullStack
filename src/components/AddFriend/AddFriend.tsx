@@ -1,25 +1,30 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import { IoPersonAdd } from "react-icons/io5";
 import { useState } from "react";
-import { socket } from "../../service/socket";
+import axios from "axios";
 
-function AddFriend({ nickname }: { nickname: string }) {
+function AddFriend({ myNickname }: { myNickname: string }) {
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
 
-  const makeFriend = () => {
+  const makeFriend = async () => {
     const friendData = {
       name: "",
-      usersArray: [nickname, name],
+      usersArray: [myNickname, name],
     };
-    socket.emit("create:room", friendData);
-    console.log(friendData);
+    const response = await axios.post("http://172.16.61.119:3000/room/create-room", friendData);
+    console.log(response.data);
     setIsFormShown(false);
+    setName("");
   };
 
   return (
     <>
       <button className="btn btn-outline-light btn-lg  mx-auto mb-4" onClick={() => setIsFormShown(!isFormShown)}>
-        Add Friend <span className="ms-2">{isFormShown ? "-" : "+"}</span>
+        Add Friend{" "}
+        <span className="ms-2">
+          <IoPersonAdd />
+        </span>
       </button>
 
       {isFormShown && (

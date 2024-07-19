@@ -11,10 +11,10 @@ interface LoginData {
 interface LoginFunctions {
   setToken: React.Dispatch<React.SetStateAction<string>>;
   setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
-  setNickname: React.Dispatch<React.SetStateAction<string>>;
+  setMyNickname: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function LoginPage({ setToken, setRooms, setNickname }: LoginFunctions) {
+function LoginPage({ setToken, setRooms, setMyNickname }: LoginFunctions) {
   const [loginData, setLoginData] = useState<LoginData>({
     nickname: "",
     password: "",
@@ -24,7 +24,7 @@ function LoginPage({ setToken, setRooms, setNickname }: LoginFunctions) {
     try {
       const response = await axios.post("http://172.16.61.119:3000/user/login", loginData);
       setRooms(response.data.rooms);
-      setNickname(loginData.nickname);
+      setMyNickname(loginData.nickname);
       setToken(response.data.token);
     } catch (error) {
       console.error("Error:", error);

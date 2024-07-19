@@ -1,4 +1,5 @@
 import "./MessageForm.css";
+import { GrSend } from "react-icons/gr";
 
 interface ChatFormProps {
   newMessage: string;
@@ -9,14 +10,20 @@ interface ChatFormProps {
 function MessageForm({ newMessage, setNewMessage, sendMessage }: ChatFormProps) {
   return (
     <form
-      className="d-flex justify-content-center"
+      className="chat-form d-flex justify-content-center"
       onSubmit={(e) => {
         e.preventDefault();
       }}
     >
-      <input type="text" className="form-control fn-1" value={newMessage} onChange={(e) => setNewMessage(e.target.value)} />
+      <input
+        type="text"
+        className="form-control fn-1"
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+        placeholder="type here..."
+      />
       <button className="btn btn-outline-light ms-4" onClick={sendMessage}>
-        Send
+        <GrSend size={25} />
       </button>
     </form>
   );

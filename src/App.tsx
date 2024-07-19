@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { socket } from "./service/socket";
+import { BiSolidChat } from "react-icons/bi";
 
+import { socket } from "./service/socket";
 import MessageForm from "./components/MessageForm/MessageForm";
 import Chat from "./components/Chat/Chat";
 import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import Sidebar from "./components/Sidebar/Sidebar";
+import ChatNav from "./components/ChatNav/ChatNav";
 
 export interface Message {
   nickname: string;
@@ -34,21 +36,20 @@ function App() {
   const [isChatChoosen, setIsChatChoosen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
-  const [nickname, setNickname] = useState<string>("");
-  const [currentRoomToken, setCurrentRoomToken] = useState<string>("");
+  const [myNickname, setMyNickname] = useState<string>("");
+  const [currentRoom, setCurrentRoom] = useState<Room>({ token: "", name: "", isGroup: false });
 
   useEffect(() => {
     socket.connect();
 
-    // socket.on("load:message", (laodData) => {
-    //   console.log("to otrzymuję z loada");
-    //   console.log(laodData);
-    //   setUsers(laodData);
-    // });
-
     socket.on("get:message", (message) => {
-      console.log(message);
+      // console.log(message);
       setMessages((messages) => [...messages, message]);
+      scrollToBottom();
+    });
+
+    socket.on("add:room", (response) => {
+      console.log(response);
     });
 
     return () => {
@@ -58,12 +59,39 @@ function App() {
 
   const sendMessage = () => {
     if (newMessage.trim() !== "") {
-      const messageData = { nickname: nickname, content: newMessage, token: currentRoomToken };
+      const messageData = { nickname: myNickname, content: newMessage, token: currentRoom.token };
       console.log(messageData);
       socket.emit("send:message", messageData);
-      // setMessages((messages) => [...messages, { nickname: "Igor", content: newMessage, sendDate: "" }]);
+      // setMessages((messages) => [...messages, { nickname: "Igor", content: newMessage, sendDate: "" }]);  //for dev
       setNewMessage("");
     }
+  };
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      const element = document.querySelector(".scroll-area") as HTMLDivElement;
+      if (element) {
+        const start = element.scrollTop;
+        const end = element.scrollHeight;
+        const distance = end - start;
+        const duration = 500;
+        let startTime: number | null = null;
+
+        const animateScroll = (currentTime: number) => {
+          if (!startTime) startTime = currentTime;
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          element.scrollTop = start + distance * progress;
+
+          if (elapsed < duration) {
+            window.requestAnimationFrame(animateScroll);
+          } else {
+            element.scrollTop = end;
+          }
+        };
+        window.requestAnimationFrame(animateScroll);
+      }
+    }, 0);
   };
 
   return (
@@ -71,25 +99,28 @@ function App() {
       {token ? (
         <div className="container-fluid">
           <div className="header  row">
-            <h1 className="text-center my-3">WamaChat</h1>
+            <h1 className="text-center my-3">
+              WamaChat <BiSolidChat />
+            </h1>
           </div>
           <div className="row">
             <Sidebar
               rooms={rooms}
               setIsChatChoosen={setIsChatChoosen}
               setMessages={setMessages}
-              setCurrentRoomToken={setCurrentRoomToken}
-              nickname={nickname}
+              setCurrentRoom={setCurrentRoom}
+              myNickname={myNickname}
             />
-            <div className="chat-container  col-12 col-md-9 p-3">
+            <div className="chat-container  col-12 col-md-9">
+              <ChatNav currentRoom={currentRoom} />
               {isChatChoosen ? (
                 <>
-                  <Chat messages={messages} nickname={nickname} />
-                  <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
+                  <Chat messages={messages} myNickname={myNickname} />
                 </>
               ) : (
-                <h1 className="chat-place-holder">nie wybrano chata</h1>
+                <h1 className="chat-place-holder text-center p-5">Choose the chat</h1>
               )}
+              <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
             </div>
           </div>
         </div>
@@ -98,7 +129,7 @@ function App() {
           {isRegisterPage ? (
             <RegisterPage setIsRegisterPage={setIsRegisterPage} />
           ) : (
-            <LoginPage setToken={setToken} setRooms={setRooms} setNickname={setNickname} />
+            <LoginPage setToken={setToken} setRooms={setRooms} setMyNickname={setMyNickname} />
           )}
           {isRegisterPage ? (
             <p className="login-or-register-button fst-italic">

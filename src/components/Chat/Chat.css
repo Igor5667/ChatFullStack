@@ -1,8 +1,9 @@
 .scroll-area {
   flex: 1;
   overflow-y: auto;
-  height: 80vh;
+  height: 72vh;
   color: white;
+  padding: 0 40px;
 }
 .message {
   padding: 8px;
