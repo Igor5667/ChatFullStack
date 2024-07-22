@@ -5,8 +5,6 @@
   width: 60px; /* Początkowa szerokość, aby widoczna była tylko ikona profilu */
   height: 60px;
   margin-top: auto;
-  margin-right: auto;
-  margin-bottom: 12%;
   font-size: 1.3em;
   background-color: rgb(46, 46, 46);
   border-radius: 20px;
@@ -41,8 +39,8 @@
   justify-content: space-around;
 }
 
-.nickname:hover,
-.logout-icon:hover,
-.profile-icon:hover {
+.logout-icon:hover {
   color: rgb(143, 143, 143);
+  transition: 0.1s;
+  font-size: 0.95em;
 }

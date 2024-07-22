@@ -16,9 +16,11 @@ interface Sidebar {
   setCurrentRoom: React.Dispatch<React.SetStateAction<Room>>;
   myNickname: string;
   scrollToBottom: () => void;
+  setToken: React.Dispatch<React.SetStateAction<string>>;
+  token: string;
 }
 
-function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickname, scrollToBottom }: Sidebar) {
+function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickname, scrollToBottom, setToken, token }: Sidebar) {
   let friends: Room[] = [];
   let groups: Room[] = [];
 
@@ -76,7 +78,7 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
           })}
         </ul>
       </div>
-      <Profile myNickname={myNickname} />
+      <Profile myNickname={myNickname} setToken={setToken} token={token} />
     </div>
   );
 }

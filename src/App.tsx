@@ -10,7 +10,6 @@ import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ChatNav from "./components/ChatNav/ChatNav";
-import Profile from "./components/Profile/Profile";
 
 export interface Message {
   nickname: string;
@@ -112,6 +111,8 @@ function App() {
               setCurrentRoom={setCurrentRoom}
               myNickname={myNickname}
               scrollToBottom={scrollToBottom}
+              setToken={setToken}
+              token={token}
             />
             <div className="chat-container  col-12 col-md-9">
               <ChatNav currentRoom={currentRoom} />
