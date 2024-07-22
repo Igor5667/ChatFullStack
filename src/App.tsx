@@ -10,6 +10,7 @@ import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ChatNav from "./components/ChatNav/ChatNav";
+import Profile from "./components/Profile/Profile";
 
 export interface Message {
   nickname: string;
@@ -32,35 +33,36 @@ export interface Room {
 function App() {
   const [newMessage, setNewMessage] = useState<string>("");
   const [token, setToken] = useState<string>("");
+  const [myNickname, setMyNickname] = useState<string>("");
   const [isRegisterPage, setIsRegisterPage] = useState<boolean>(false);
   const [isChatChoosen, setIsChatChoosen] = useState<boolean>(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
-  const [myNickname, setMyNickname] = useState<string>("");
   const [currentRoom, setCurrentRoom] = useState<Room>({ token: "", name: "", isGroup: false });
 
   useEffect(() => {
+    document.title = myNickname;
     socket.connect();
 
     socket.on("get:message", (message) => {
       // console.log(message);
-      setMessages((messages) => [...messages, message]);
+      setMessages((prevMessages) => [...prevMessages, message]);
+      console.log("get:message PRZY WYSLANIU WIADOMOSCI");
+      console.log(message);
       scrollToBottom();
     });
 
-    socket.on("add:room", (response) => {
-      console.log(response);
-    });
+    console.log("MESSAGES ZMIENNA");
+    console.log(messages);
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [myNickname]);
 
   const sendMessage = () => {
     if (newMessage.trim() !== "") {
       const messageData = { nickname: myNickname, content: newMessage, token: currentRoom.token };
-      console.log(messageData);
       socket.emit("send:message", messageData);
       // setMessages((messages) => [...messages, { nickname: "Igor", content: newMessage, sendDate: "" }]);  //for dev
       setNewMessage("");
@@ -97,7 +99,7 @@ function App() {
     <div className="container-fluid p-0">
       {token ? (
         <div className="container-fluid">
-          <div className="header  row">
+          <div className="header  row ">
             <h1 className="text-center my-3">
               WamaChat <BiSolidChat />
             </h1>

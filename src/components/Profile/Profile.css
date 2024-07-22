@@ -1,0 +1,48 @@
+.profile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px; /* Początkowa szerokość, aby widoczna była tylko ikona profilu */
+  height: 60px;
+  margin-top: auto;
+  margin-right: auto;
+  margin-bottom: 12%;
+  font-size: 1.3em;
+  background-color: rgb(46, 46, 46);
+  border-radius: 20px;
+  box-shadow: 0 0 4px rgb(228, 228, 228);
+  overflow: hidden; /* Ukrycie pseudonimu i ikony wylogowania */
+  transition: width 0.5s; /* Płynne przejście zmiany szerokości */
+  z-index: 2;
+  font-size: 25px;
+}
+
+.nickname,
+.logout-icon {
+  display: none; /* Ukrycie pseudonimu i ikony wylogowania początkowo */
+  margin-left: 10px;
+}
+
+.nickname,
+.logout-icon {
+  cursor: pointer;
+}
+
+.profile:hover {
+  width: 250px; /* Zwiększenie szerokości */
+}
+
+.profile:hover .nickname,
+.profile:hover .logout-icon {
+  display: block; /* Wyświetlenie pseudonimu i ikony wylogowania po najechaniu */
+}
+
+.profile:hover {
+  justify-content: space-around;
+}
+
+.nickname:hover,
+.logout-icon:hover,
+.profile-icon:hover {
+  color: rgb(143, 143, 143);
+}

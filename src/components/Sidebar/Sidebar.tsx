@@ -1,11 +1,13 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Sidebar.css";
+import { useState } from "react";
+import axios from "axios";
 import { Room } from "../../App";
 import { Message } from "../../App";
+import { socket } from "../../service/socket";
+import Profile from "../Profile/Profile";
 import AddFriend from "../AddFriend/AddFriend";
 import NewGroup from "../NewGroup/NewGroup";
-import axios from "axios";
-import { useState } from "react";
 
 interface Sidebar {
   rooms: Room[];
@@ -35,10 +37,15 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
     setFriendsDynamic((friendsDynamic) => [...friendsDynamic, newFriend]);
   };
 
-  const sendToken = async (room: any) => {
+  const getCurrentChatMessages = async (room: any) => {
+    const response = await axios.post("http://172.16.61.119:3000/user/load-messages", { token: room.token });
+    socket.emit("joinRoom", { token: room.token });
+
+    console.log("GET CURRENT CHAT MESSAGES");
+    console.log(response.data);
+
     setIsChatChoosen(true);
     setCurrentRoom(room);
-    const response = await axios.post("http://172.16.61.119:3000/user/load-messages", { token: room.token });
     setMessages(response.data);
     scrollToBottom();
   };
@@ -47,13 +54,12 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
     <div className="sidebar  col-12 col-md-3 p-3 d-flex flex-column">
       <AddFriend myNickname={myNickname} pushToFriends={pushToFriends} />
       <NewGroup />
-
       <div className="ms-3 mt-2">
         <h2>Friends</h2>
         <ul className="fiernds-list">
           {friendsDynamic.map((friend, index) => {
             return (
-              <li key={index} onClick={() => sendToken(friend)}>
+              <li key={index} onClick={() => getCurrentChatMessages(friend)}>
                 {friend.name}
               </li>
             );
@@ -63,13 +69,14 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
         <ul>
           {groupsDynamic.map((group, index) => {
             return (
-              <li key={index} onClick={() => sendToken(group)}>
+              <li key={index} onClick={() => getCurrentChatMessages(group)}>
                 {group.name}
               </li>
             );
           })}
         </ul>
       </div>
+      <Profile myNickname={myNickname} />
     </div>
   );
 }
