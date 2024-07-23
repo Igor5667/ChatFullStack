@@ -55,7 +55,8 @@ function App() {
     });
 
     socket.on("get:invite", (invite) => {
-      if (invite.reciever === myNickname) {
+      if (invite.receiver === myNickname) {
+        console.log(`Jam ${invite.receiver} otrzymał invite reqesta od ${invite.sender}`);
         setInviteRequests((prevInvitesRequests) => [...prevInvitesRequests, invite.sender]);
       }
     });
@@ -102,8 +103,6 @@ function App() {
   };
   return (
     <div className="container-fluid p-0">
-      <p>Dla Huberta</p>
-      <h1 className="dla-huberta">obecny uzytkownik: {myNickname}</h1>
       {token ? (
         <div className="container-fluid">
           <div className="row">
@@ -118,6 +117,7 @@ function App() {
                   token={token}
                   inviteReqests={inviteReqests}
                   setInviteRequests={setInviteRequests}
+                  setRooms={setRooms}
                 />
               </div>
             </div>

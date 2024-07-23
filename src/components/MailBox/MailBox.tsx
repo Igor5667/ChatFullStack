@@ -1,33 +1,49 @@
 import { useState } from "react";
-import { MdOutlineMail } from "react-icons/md";
+import { IoMailOutline } from "react-icons/io5";
+import { IoMailUnreadOutline } from "react-icons/io5";
 import { FaCheck } from "react-icons/fa";
 import { CgClose } from "react-icons/cg";
 import { socket } from "../../service/socket";
 import "./MailBox.css";
+import { Room } from "../../App";
 
 interface MailBoxProps {
   inviteReqests: string[];
   myNickname: string;
   setInviteRequests: React.Dispatch<React.SetStateAction<string[]>>;
+  setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
 }
 
-function MailBox({ inviteReqests, myNickname, setInviteRequests }: MailBoxProps) {
+function MailBox({ inviteReqests, myNickname, setInviteRequests, setRooms }: MailBoxProps) {
   const [isMailBoxShown, setIsMailBoxShown] = useState<boolean>(false);
 
   const handleInvitation = (receiver: string, method: string) => {
     socket.emit(`invite:${method}`, { sender: myNickname, receiver });
     const filteredReqests = inviteReqests.filter((invitation) => invitation !== receiver);
     setInviteRequests(filteredReqests);
+    if (method === "accept") {
+      setRooms((prevArr) => [...prevArr, { token: "", name: receiver, isGroup: false }]);
+    }
   };
 
   return (
     <>
-      <MdOutlineMail
-        className="mail-icon"
-        onClick={() => {
-          setIsMailBoxShown(true);
-        }}
-      />
+      {inviteReqests.length === 0 ? (
+        <IoMailOutline
+          className="mail-icon"
+          onClick={() => {
+            setIsMailBoxShown(true);
+          }}
+        />
+      ) : (
+        <IoMailUnreadOutline
+          className="mail-icon"
+          onClick={() => {
+            setIsMailBoxShown(true);
+          }}
+        />
+      )}
+
       {isMailBoxShown && (
         <div className="mail-box-shadow">
           <div className="mail-box">

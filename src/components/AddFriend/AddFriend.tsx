@@ -10,12 +10,7 @@ function AddFriend({ myNickname, pushToFriends }: { myNickname: string; pushToFr
 
   const makeFriend = async () => {
     try {
-      //help for server
-      console.log("ADD FIREND DATA: ");
-      console.log({ sender: myNickname, reciever: name });
-
-      socket.emit("invite:user", { sender: myNickname, reciever: name });
-      pushToFriends(name);
+      socket.emit("invite:user", { sender: myNickname, receiver: name });
       setIsFormShown(false);
       setName("");
     } catch (error) {
