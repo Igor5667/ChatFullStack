@@ -10,6 +10,7 @@ import LoginPage from "./pages/Login/LoginPage";
 import RegisterPage from "./pages/Register/RegisterPage";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ChatNav from "./components/ChatNav/ChatNav";
+import Profile from "./components/Profile/Profile";
 
 export interface Message {
   nickname: string;
@@ -23,11 +24,15 @@ export interface Room {
   isGroup: boolean;
 }
 
+//TO DO
 // handle data aby sie wyswietlala tylko godzina i minuta jezeli to dzisij
 // wyswietla sie dzien tygodnia jezeli to ten tydzien
 // wyswietla sie dały date jezeli ponad tydzien
-
-// zrobic zeby getem pobieralo restAPIm load
+// ladnie zrobic login page and registration
+// zrobić aby się wyświetlał jeden nick gdy wiadomosci są pod sobą
+// localstorage token -> sprawdzać czy jest token w bazie danych
+// add group formularz
+// scroll area na friends i groups
 
 function App() {
   const [newMessage, setNewMessage] = useState<string>("");
@@ -38,21 +43,22 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room>({ token: "", name: "", isGroup: false });
+  const [inviteReqests, setInviteRequests] = useState<string[]>(["ruchacz_3000"]);
 
   useEffect(() => {
-    document.title = myNickname;
     socket.connect();
 
     socket.on("get:message", (message) => {
       // console.log(message);
       setMessages((prevMessages) => [...prevMessages, message]);
-      console.log("get:message PRZY WYSLANIU WIADOMOSCI");
-      console.log(message);
       scrollToBottom();
     });
 
-    console.log("MESSAGES ZMIENNA");
-    console.log(messages);
+    socket.on("get:invite", (invite) => {
+      if (invite.reciever === myNickname) {
+        setInviteRequests((prevInvitesRequests) => [...prevInvitesRequests, invite.sender]);
+      }
+    });
 
     return () => {
       socket.disconnect();
@@ -98,10 +104,15 @@ function App() {
     <div className="container-fluid p-0">
       {token ? (
         <div className="container-fluid">
-          <div className="header  row ">
-            <h1 className="text-center my-3">
-              WamaChat <BiSolidChat />
-            </h1>
+          <div className="row">
+            <div className="header">
+              <h1 className="text-center my-3">
+                WamaChat <BiSolidChat />
+              </h1>
+              <div>
+                <Profile myNickname={myNickname} setToken={setToken} token={token} inviteReqests={inviteReqests} />
+              </div>
+            </div>
           </div>
           <div className="row">
             <Sidebar
@@ -115,9 +126,9 @@ function App() {
               token={token}
             />
             <div className="chat-container  col-12 col-md-9">
-              <ChatNav currentRoom={currentRoom} />
               {isChatChoosen ? (
                 <>
+                  <ChatNav currentRoom={currentRoom} />
                   <Chat messages={messages} myNickname={myNickname} />
                   <MessageForm newMessage={newMessage} setNewMessage={setNewMessage} sendMessage={sendMessage} />
                 </>

@@ -2,44 +2,49 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60px; /* Początkowa szerokość, aby widoczna była tylko ikona profilu */
+  width: 60px;
   height: 60px;
   margin-top: auto;
   font-size: 1.3em;
   background-color: rgb(46, 46, 46);
-  border-radius: 20px;
+  border-radius: 60px;
   box-shadow: 0 0 4px rgb(228, 228, 228);
-  overflow: hidden; /* Ukrycie pseudonimu i ikony wylogowania */
-  transition: width 0.5s; /* Płynne przejście zmiany szerokości */
+  overflow: hidden;
+  transition: ease-out width 0.5s;
   z-index: 2;
   font-size: 25px;
 }
 
 .nickname,
-.logout-icon {
-  display: none; /* Ukrycie pseudonimu i ikony wylogowania początkowo */
+.logout-icon,
+.mail-icon {
+  display: none;
   margin-left: 10px;
 }
 
 .nickname,
-.logout-icon {
+.logout-icon,
+.mail-icon {
   cursor: pointer;
 }
 
 .profile:hover {
-  width: 250px; /* Zwiększenie szerokości */
+  width: 250px;
+  border-radius: 60px;
 }
 
 .profile:hover .nickname,
-.profile:hover .logout-icon {
-  display: block; /* Wyświetlenie pseudonimu i ikony wylogowania po najechaniu */
+.profile:hover .logout-icon,
+.profile:hover .mail-icon {
+  display: block;
 }
 
 .profile:hover {
   justify-content: space-around;
 }
 
-.logout-icon:hover {
+.logout-icon:hover,
+.mail-icon:hover {
   color: rgb(143, 143, 143);
   transition: 0.1s;
   font-size: 0.95em;

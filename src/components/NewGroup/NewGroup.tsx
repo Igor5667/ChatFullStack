@@ -23,6 +23,20 @@ function NewGroup() {
     setIsListShown(false);
   };
 
+  const onExit = () => {
+    setIsFormShown(false);
+    setSearchTerm("");
+    setUsersToSend([]);
+    setSearchTerm("");
+    setIsListShown(false);
+  };
+
+  const handleEscape = (e: any) => {
+    if (e.key === "Escape") {
+      setIsListShown(false);
+    }
+  };
+
   return (
     <>
       <button className="btn btn-outline-light btn-lg  mx-auto mb-4" onClick={() => setIsFormShown(!isFormShown)}>
@@ -43,7 +57,7 @@ function NewGroup() {
               value={searchTerm}
               onFocus={() => setIsListShown(true)}
               onChange={(e) => handleChange(e)}
-              //   onKeyUp={(e)=>}
+              onKeyUp={(e) => handleEscape(e)}
               placeholder="Friends"
             />
 
@@ -76,9 +90,11 @@ function NewGroup() {
                 <li>{user}</li>
               ))}
             </ul>
-            <div className="d-flex space-between w-100">
-              <button>Back</button>
-              <button>Add</button>
+            <div className="d-flex justify-content-between w-75 m-4 mt-auto">
+              <button className="btn btn-outline-light" onClick={onExit}>
+                Back
+              </button>
+              <button className="btn btn-outline-light">Add</button>
             </div>
           </div>
         </div>

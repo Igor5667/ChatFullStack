@@ -9,7 +9,17 @@ html {
   background-color: #292929;
   color: white;
   border-bottom: solid #5c5c5c 3px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+  margin: 0;
 }
+.header h1 {
+  flex-grow: 1;
+  text-align: center;
+}
+
 .chat-container {
   background-color: #333333;
   padding: 0;

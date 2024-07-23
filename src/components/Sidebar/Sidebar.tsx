@@ -5,7 +5,6 @@ import axios from "axios";
 import { Room } from "../../App";
 import { Message } from "../../App";
 import { socket } from "../../service/socket";
-import Profile from "../Profile/Profile";
 import AddFriend from "../AddFriend/AddFriend";
 import NewGroup from "../NewGroup/NewGroup";
 
@@ -21,6 +20,16 @@ interface Sidebar {
 }
 
 function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickname, scrollToBottom, setToken, token }: Sidebar) {
+  const rooms1: Room[] = [
+    { token: "1", name: "Andrzej", isGroup: false },
+    { token: "sjefadf", name: "Fałstyn", isGroup: false },
+    { token: "2", name: "Papierzaki", isGroup: true },
+    { token: "3", name: "Kryspin", isGroup: false },
+    { token: "4", name: "Room 1", isGroup: true },
+    { token: "5", name: "Room 2", isGroup: true },
+    { token: "6", name: "Room 3", isGroup: true },
+  ];
+
   let friends: Room[] = [];
   let groups: Room[] = [];
 
@@ -35,8 +44,8 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
   const [friendsDynamic, setFriendsDynamic] = useState<Room[]>(friends);
   const [groupsDynamic, setGroupsDynamic] = useState<Room[]>(groups);
 
-  const pushToFriends = (newFriend: Room) => {
-    setFriendsDynamic((friendsDynamic) => [...friendsDynamic, newFriend]);
+  const pushToFriends = (newFriend: string) => {
+    setFriendsDynamic((friendsDynamic) => [...friendsDynamic, { token: "", name: newFriend, isGroup: false }]);
   };
 
   const getCurrentChatMessages = async (room: any) => {
@@ -78,7 +87,6 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
           })}
         </ul>
       </div>
-      <Profile myNickname={myNickname} setToken={setToken} token={token} />
     </div>
   );
 }
