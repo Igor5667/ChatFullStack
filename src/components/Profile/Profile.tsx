@@ -9,9 +9,10 @@ interface ProfileProps {
   setToken: React.Dispatch<React.SetStateAction<string>>;
   token: string;
   inviteReqests: string[];
+  setInviteRequests: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function Profile({ myNickname, setToken, token, inviteReqests }: ProfileProps) {
+function Profile({ myNickname, setToken, token, inviteReqests, setInviteRequests }: ProfileProps) {
   const logout = async () => {
     const response = await axios.post("http://172.16.61.119:3000/room/create-room", { token });
     setToken("");
@@ -20,10 +21,11 @@ function Profile({ myNickname, setToken, token, inviteReqests }: ProfileProps) {
   return (
     <div className="profile">
       <MdLogout className="logout-icon" onClick={logout} />
-      <MailBox inviteReqests={inviteReqests} myNickname={myNickname} />
+      <MailBox inviteReqests={inviteReqests} setInviteRequests={setInviteRequests} myNickname={myNickname} />
 
       <div className="nickname ms-4">{myNickname}</div>
       <CgProfile className="profile-icon" />
+      {/* <div className="kolko"></div> */}
     </div>
   );
 }

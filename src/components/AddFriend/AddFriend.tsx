@@ -9,11 +9,11 @@ function AddFriend({ myNickname, pushToFriends }: { myNickname: string; pushToFr
   const [name, setName] = useState<string>("");
 
   const makeFriend = async () => {
-    const friendData = {
-      name: "",
-      usersArray: [myNickname, name],
-    };
     try {
+      //help for server
+      console.log("ADD FIREND DATA: ");
+      console.log({ sender: myNickname, reciever: name });
+
       socket.emit("invite:user", { sender: myNickname, reciever: name });
       pushToFriends(name);
       setIsFormShown(false);

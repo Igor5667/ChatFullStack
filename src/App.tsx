@@ -43,7 +43,7 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room>({ token: "", name: "", isGroup: false });
-  const [inviteReqests, setInviteRequests] = useState<string[]>(["ruchacz_3000"]);
+  const [inviteReqests, setInviteRequests] = useState<string[]>(["ruchacz_3000", "lubięSt00pki69", "goracyKrzys69_2137"]);
 
   useEffect(() => {
     socket.connect();
@@ -102,6 +102,8 @@ function App() {
   };
   return (
     <div className="container-fluid p-0">
+      <p>Dla Huberta</p>
+      <h1 className="dla-huberta">obecny uzytkownik: {myNickname}</h1>
       {token ? (
         <div className="container-fluid">
           <div className="row">
@@ -110,7 +112,13 @@ function App() {
                 WamaChat <BiSolidChat />
               </h1>
               <div>
-                <Profile myNickname={myNickname} setToken={setToken} token={token} inviteReqests={inviteReqests} />
+                <Profile
+                  myNickname={myNickname}
+                  setToken={setToken}
+                  token={token}
+                  inviteReqests={inviteReqests}
+                  setInviteRequests={setInviteRequests}
+                />
               </div>
             </div>
           </div>
