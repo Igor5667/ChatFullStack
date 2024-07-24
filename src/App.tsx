@@ -43,7 +43,7 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room>({ token: "", name: "", isGroup: false });
-  const [inviteReqests, setInviteRequests] = useState<string[]>(["ruchacz_3000", "lubięSt00pki69", "goracyKrzys69_2137"]);
+  const [inviteReqests, setInviteRequests] = useState<string[]>([]);
 
   useEffect(() => {
     socket.connect();
@@ -56,15 +56,37 @@ function App() {
 
     socket.on("get:invite", (invite) => {
       if (invite.receiver === myNickname) {
-        console.log(`Jam ${invite.receiver} otrzymał invite reqesta od ${invite.sender}`);
+        console.log(`Jam ${invite.receiver} otrzymał invite REQUESTA od ${invite.sender}`);
         setInviteRequests((prevInvitesRequests) => [...prevInvitesRequests, invite.sender]);
       }
     });
 
+    socket.on("get:all-invites", (response) => {
+      if (response.nickname === myNickname) {
+        console.log(`Loaduje wszystkie invites dla mej osobowosci ${response.nickname}`);
+        setInviteRequests(response.arr);
+      }
+    });
+
+    socket.on("get:room", (response: { sender: Room; receiver: Room }) => {
+      if (response.receiver.name === myNickname) {
+        console.log("ja jestem");
+        console.log(response.receiver);
+        setRooms((rooms) => [...rooms, response.sender]);
+      } else if (response.sender.name === myNickname) {
+        console.log("ja jestem");
+        console.log(response.receiver);
+        setRooms((rooms) => [...rooms, response.receiver]);
+      }
+    });
+
+    console.log("to jest rooms:");
+    console.log(rooms);
+
     return () => {
       socket.disconnect();
     };
-  }, [myNickname]);
+  }, [myNickname, rooms]);
 
   const sendMessage = () => {
     if (newMessage.trim() !== "") {
@@ -101,6 +123,7 @@ function App() {
       }
     }, 0);
   };
+
   return (
     <div className="container-fluid p-0">
       {token ? (

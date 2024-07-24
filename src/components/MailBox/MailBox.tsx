@@ -6,6 +6,7 @@ import { CgClose } from "react-icons/cg";
 import { socket } from "../../service/socket";
 import "./MailBox.css";
 import { Room } from "../../App";
+import axios from "axios";
 
 interface MailBoxProps {
   inviteReqests: string[];
@@ -17,13 +18,14 @@ interface MailBoxProps {
 function MailBox({ inviteReqests, myNickname, setInviteRequests, setRooms }: MailBoxProps) {
   const [isMailBoxShown, setIsMailBoxShown] = useState<boolean>(false);
 
-  const handleInvitation = (receiver: string, method: string) => {
+  const handleInvitation = async (receiver: string, method: string) => {
     socket.emit(`invite:${method}`, { sender: myNickname, receiver });
     const filteredReqests = inviteReqests.filter((invitation) => invitation !== receiver);
     setInviteRequests(filteredReqests);
-    if (method === "accept") {
-      setRooms((prevArr) => [...prevArr, { token: "", name: receiver, isGroup: false }]);
-    }
+  };
+
+  const loadNotifications = async () => {
+    socket.emit("invite:load", myNickname);
   };
 
   return (
@@ -33,6 +35,7 @@ function MailBox({ inviteReqests, myNickname, setInviteRequests, setRooms }: Mai
           className="mail-icon"
           onClick={() => {
             setIsMailBoxShown(true);
+            loadNotifications();
           }}
         />
       ) : (
@@ -40,6 +43,7 @@ function MailBox({ inviteReqests, myNickname, setInviteRequests, setRooms }: Mai
           className="mail-icon"
           onClick={() => {
             setIsMailBoxShown(true);
+            loadNotifications();
           }}
         />
       )}
@@ -52,11 +56,14 @@ function MailBox({ inviteReqests, myNickname, setInviteRequests, setRooms }: Mai
               return (
                 <div key={index} className="invitation">
                   <div>{name} invited you </div>
-                  <button className="button-icon ms-auto btn btn-outline-light">
-                    <FaCheck onClick={() => handleInvitation(name, "accept")} />
+                  <button className="button-icon ms-auto btn btn-outline-light" onClick={() => handleInvitation(name, "accept")}>
+                    <FaCheck />
                   </button>
-                  <button className="button-icon cross ms-2 btn btn-outline-light">
-                    <CgClose className="cross" onClick={() => handleInvitation(name, "decline")} />
+                  <button
+                    className="button-icon cross ms-2 btn btn-outline-light"
+                    onClick={() => handleInvitation(name, "decline")}
+                  >
+                    <CgClose className="cross" />
                   </button>
                 </div>
               );

@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Sidebar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Room } from "../../App";
 import { Message } from "../../App";
@@ -20,29 +20,24 @@ interface Sidebar {
 }
 
 function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickname, scrollToBottom, setToken, token }: Sidebar) {
-  const rooms1: Room[] = [
-    { token: "1", name: "Andrzej", isGroup: false },
-    { token: "sjefadf", name: "Fałstyn", isGroup: false },
-    { token: "2", name: "Papierzaki", isGroup: true },
-    { token: "3", name: "Kryspin", isGroup: false },
-    { token: "4", name: "Room 1", isGroup: true },
-    { token: "5", name: "Room 2", isGroup: true },
-    { token: "6", name: "Room 3", isGroup: true },
-  ];
+  const [friendsDynamic, setFriendsDynamic] = useState<Room[]>([]);
+  const [groupsDynamic, setGroupsDynamic] = useState<Room[]>([]);
 
-  let friends: Room[] = [];
-  let groups: Room[] = [];
+  useEffect(() => {
+    let friends: Room[] = [];
+    let groups: Room[] = [];
 
-  for (let room of rooms) {
-    if (room.isGroup === true) {
-      groups.push(room);
-    } else {
-      friends.push(room);
+    for (let room of rooms) {
+      if (room.isGroup === true) {
+        groups.push(room);
+      } else {
+        friends.push(room);
+      }
     }
-  }
 
-  const [friendsDynamic, setFriendsDynamic] = useState<Room[]>(friends);
-  const [groupsDynamic, setGroupsDynamic] = useState<Room[]>(groups);
+    setFriendsDynamic(friends);
+    setGroupsDynamic(groups);
+  }, [rooms]);
 
   const pushToFriends = (newFriend: string) => {
     setFriendsDynamic((friendsDynamic) => [...friendsDynamic, { token: "", name: newFriend, isGroup: false }]);
