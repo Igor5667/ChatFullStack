@@ -16,7 +16,7 @@ interface ProfileProps {
 
 function Profile({ myNickname, setToken, token, inviteReqests, setInviteRequests, setRooms }: ProfileProps) {
   const logout = async () => {
-    const response = await axios.post("http://172.16.61.119:3000/room/create-room", { token });
+    const response = await axios.post("http://172.16.61.119:18353/room/create-room", { token });
     setToken("");
   };
 
@@ -26,8 +26,8 @@ function Profile({ myNickname, setToken, token, inviteReqests, setInviteRequests
       <MailBox inviteReqests={inviteReqests} setInviteRequests={setInviteRequests} myNickname={myNickname} setRooms={setRooms} />
 
       <div className="nickname ms-4">{myNickname}</div>
+
       <CgProfile className="profile-icon" />
-      {/* <div className="kolko"></div> */}
     </div>
   );
 }

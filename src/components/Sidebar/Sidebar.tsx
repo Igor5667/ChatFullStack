@@ -44,12 +44,8 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
   };
 
   const getCurrentChatMessages = async (room: any) => {
-    const response = await axios.post("http://172.16.61.119:3000/user/load-messages", { token: room.token });
+    const response = await axios.post("http://172.16.61.119:18353/user/load-messages", { token: room.token });
     socket.emit("joinRoom", { token: room.token });
-
-    console.log("GET CURRENT CHAT MESSAGES");
-    console.log(response.data);
-
     setIsChatChoosen(true);
     setCurrentRoom(room);
     setMessages(response.data);

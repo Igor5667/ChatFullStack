@@ -24,13 +24,12 @@ export interface Room {
   isGroup: boolean;
 }
 
-//TO DO
+// TO DO
 // handle data aby sie wyswietlala tylko godzina i minuta jezeli to dzisij
 // wyswietla sie dzien tygodnia jezeli to ten tydzien
 // wyswietla sie dały date jezeli ponad tydzien
 // ladnie zrobic login page and registration
 // zrobić aby się wyświetlał jeden nick gdy wiadomosci są pod sobą
-// localstorage token -> sprawdzać czy jest token w bazie danych
 // add group formularz
 // scroll area na friends i groups
 
@@ -49,7 +48,8 @@ function App() {
     socket.connect();
 
     socket.on("get:message", (message) => {
-      // console.log(message);
+      console.log("messages:");
+      console.log(messages);
       setMessages((prevMessages) => [...prevMessages, message]);
       scrollToBottom();
     });
@@ -80,13 +80,10 @@ function App() {
       }
     });
 
-    console.log("to jest rooms:");
-    console.log(rooms);
-
     return () => {
       socket.disconnect();
     };
-  }, [myNickname, rooms]);
+  }, [myNickname]);
 
   const sendMessage = () => {
     if (newMessage.trim() !== "") {

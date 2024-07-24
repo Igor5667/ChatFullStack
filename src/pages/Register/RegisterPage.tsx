@@ -12,7 +12,7 @@ function RegisterPage({ setIsRegisterPage }: { setIsRegisterPage: React.Dispatch
 
   const register = async () => {
     try {
-      const response = await axios.post("http://172.16.61.119:3000/user/createuser", registerData);
+      const response = await axios.post("http://172.16.61.119:18353/user/createuser", registerData);
       setIsRegisterPage(false);
     } catch (error) {
       console.error("Error:", error);

@@ -22,7 +22,7 @@ function LoginPage({ setToken, setRooms, setMyNickname }: LoginFunctions) {
 
   const logIn = async () => {
     try {
-      const response = await axios.post("http://172.16.61.119:3000/user/login", loginData);
+      const response = await axios.post("http://172.16.61.119:18353/user/login", loginData);
       setRooms(response.data.rooms);
       setMyNickname(loginData.nickname);
       setToken(response.data.token);
