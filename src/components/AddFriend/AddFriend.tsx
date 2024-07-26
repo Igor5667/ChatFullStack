@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { socket } from "../../service/socket";
 
-function AddFriend({ myNickname }: { myNickname: string;}) {
+function AddFriend({ myNickname }: { myNickname: string }) {
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
 
@@ -14,7 +14,7 @@ function AddFriend({ myNickname }: { myNickname: string;}) {
       setIsFormShown(false);
       setName("");
     } catch (error) {
-      console.log("nie da się dodać frienda");
+      console.log("Cannot find friend");
       console.log(error);
     }
   };

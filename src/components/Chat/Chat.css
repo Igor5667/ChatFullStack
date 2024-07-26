@@ -14,9 +14,10 @@
 .my-message {
   background-image: linear-gradient(#0f0d83, #3c1779);
   border-top-right-radius: 0;
+  margin-left: 50px;
 }
 .other-message {
-  margin-right: 20%;
+  margin-right: 50px;
   background-color: #5c5c5c;
   color: white;
   border-top-left-radius: 0;

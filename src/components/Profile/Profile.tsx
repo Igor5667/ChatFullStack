@@ -16,7 +16,7 @@ interface ProfileProps {
 
 function Profile({ myNickname, setToken, token, inviteReqests, setInviteRequests, setRooms }: ProfileProps) {
   const logout = async () => {
-    const response = await axios.post("http://172.16.61.119:18353/room/create-room", { token });
+    // const response = await axios.post("http://172.16.61.119:18353/room/create-room", { token }); //with server 
     setToken("");
   };
 

@@ -38,18 +38,16 @@ function App() {
   const [token, setToken] = useState<string>("");
   const [myNickname, setMyNickname] = useState<string>("");
   const [isRegisterPage, setIsRegisterPage] = useState<boolean>(false);
-  const [isChatChoosen, setIsChatChoosen] = useState<boolean>(false);
+  const [isChatChoosen, setIsChatChoosen] = useState<boolean>(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [rooms, setRooms] = useState<Room[]>([]);
-  const [currentRoom, setCurrentRoom] = useState<Room>({ token: "", name: "", isGroup: false });
+  const [currentRoom, setCurrentRoom] = useState<Room>({ token: "fake token", name: "Max", isGroup: false });
   const [inviteReqests, setInviteRequests] = useState<string[]>([]);
 
   useEffect(() => {
     socket.connect();
 
     socket.on("get:message", (message) => {
-      console.log("messages:");
-      console.log(messages);
       setMessages((prevMessages) => [...prevMessages, message]);
       scrollToBottom();
     });
@@ -70,12 +68,8 @@ function App() {
 
     socket.on("get:room", (response: { sender: Room; receiver: Room }) => {
       if (response.receiver.name === myNickname) {
-        console.log("ja jestem");
-        console.log(response.receiver);
         setRooms((rooms) => [...rooms, response.sender]);
       } else if (response.sender.name === myNickname) {
-        console.log("ja jestem");
-        console.log(response.receiver);
         setRooms((rooms) => [...rooms, response.receiver]);
       }
     });
@@ -83,7 +77,7 @@ function App() {
     return () => {
       socket.disconnect();
     };
-  }, [myNickname]);
+  }, []);
 
   const sendMessage = () => {
     if (newMessage.trim() !== "") {
@@ -128,7 +122,7 @@ function App() {
           <div className="row">
             <div className="header">
               <h1 className="text-center my-3">
-                WamaChat <BiSolidChat />
+                Chat <BiSolidChat />
               </h1>
               <div>
                 <Profile

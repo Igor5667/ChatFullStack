@@ -17,7 +17,6 @@ function NewGroup() {
   const filteredUsers = users.filter((user) => user.toLowerCase().includes(searchTerm.toLowerCase()));
 
   const handleListItem = (user: string) => {
-    console.log("hejka");
     setUsersToSend((usersToSend) => [...usersToSend, user]);
     setSearchTerm("");
     setIsListShown(false);
@@ -66,7 +65,6 @@ function NewGroup() {
                 <ul className="list-group">
                   {filteredUsers.map((user, index) => {
                     if (usersToSend.includes(user)) {
-                      console.log(usersToSend);
                       return;
                     }
                     return (
