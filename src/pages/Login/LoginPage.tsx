@@ -21,14 +21,52 @@ function LoginPage({ setToken, setRooms, setMyNickname }: LoginFunctions) {
   });
 
   const logIn = async () => {
-    try {
-      const response = await axios.post("http://172.16.61.119:18353/user/login", loginData);
-      setRooms(response.data.rooms);
-      setMyNickname(loginData.nickname);
-      setToken(response.data.token);
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    //With server
+
+    // try {
+    //   const response = await axios.post("http://172.16.61.119:18353/user/login", loginData);
+    //   setRooms(response.data.rooms);
+    //   setMyNickname(loginData.nickname);
+    //   setToken(response.data.token);
+    // } catch (error) {
+    //   console.error("Error:", error);
+    // }
+
+    //End with server
+
+    //With only Front-End
+
+    setToken("i have token");
+    setRooms([
+      {
+        token: "abc123",
+        name: "John",
+        isGroup: false,
+      },
+      {
+        token: "def456",
+        name: "Max",
+        isGroup: false,
+      },
+      {
+        token: "def456",
+        name: "Alex",
+        isGroup: false,
+      },
+      {
+        token: "ghi789",
+        name: "Developers",
+        isGroup: true,
+      },
+      {
+        token: "jkl012",
+        name: "Golf",
+        isGroup: true,
+      },
+    ]);
+    setMyNickname(loginData.nickname);
+
+    //End only Front-End
   };
 
   return (

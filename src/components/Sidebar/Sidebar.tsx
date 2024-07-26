@@ -39,10 +39,6 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
     setGroupsDynamic(groups);
   }, [rooms]);
 
-  const pushToFriends = (newFriend: string) => {
-    setFriendsDynamic((friendsDynamic) => [...friendsDynamic, { token: "", name: newFriend, isGroup: false }]);
-  };
-
   const getCurrentChatMessages = async (room: any) => {
     const response = await axios.post("http://172.16.61.119:18353/user/load-messages", { token: room.token });
     socket.emit("joinRoom", { token: room.token });
@@ -54,7 +50,7 @@ function Sidebar({ rooms, setIsChatChoosen, setMessages, setCurrentRoom, myNickn
 
   return (
     <div className="sidebar  col-12 col-md-3 p-3 d-flex flex-column">
-      <AddFriend myNickname={myNickname} pushToFriends={pushToFriends} />
+      <AddFriend myNickname={myNickname}/>
       <NewGroup />
       <div className="ms-3 mt-2">
         <h2>Friends</h2>

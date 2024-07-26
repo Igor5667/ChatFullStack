@@ -4,7 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { socket } from "../../service/socket";
 
-function AddFriend({ myNickname, pushToFriends }: { myNickname: string; pushToFriends: (newFriend: any) => void }) {
+function AddFriend({ myNickname }: { myNickname: string;}) {
   const [isFormShown, setIsFormShown] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
 
