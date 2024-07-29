@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import moment from "moment";
+import "moment/locale/pl";
 import { BiSolidChat } from "react-icons/bi";
-
 import { socket } from "./service/socket";
 import MessageForm from "./components/MessageForm/MessageForm";
 import Chat from "./components/Chat/Chat";
@@ -109,20 +110,9 @@ function App() {
       // socket.emit("send:message", messageData);
 
       // with only front-end
-      const now = new Date();
 
-      const formattedDate = now.toLocaleDateString("pl-PL", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
-
-      const formattedTime = now.toLocaleTimeString("pl-PL", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-
-      const result = `${formattedTime} ${formattedDate}`;
+      moment.locale("pl");
+      const result = moment().format("HH:mm DD.MM.YYYY");
       setMessages((messages) => [...messages, { nickname: "igor", content: newMessage, sendDate: result }]);
       setNewMessage("");
       scrollToBottom();
