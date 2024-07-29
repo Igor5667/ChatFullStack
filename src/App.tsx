@@ -196,22 +196,12 @@ function App() {
           {isRegisterPage ? (
             <RegisterPage setIsRegisterPage={setIsRegisterPage} />
           ) : (
-            <LoginPage setToken={setToken} setRooms={setRooms} setMyNickname={setMyNickname} />
-          )}
-          {isRegisterPage ? (
-            <p className="login-or-register-button fst-italic">
-              Do you have an account?{" "}
-              <a className="link" onClick={() => setIsRegisterPage(!isRegisterPage)}>
-                logIn
-              </a>
-            </p>
-          ) : (
-            <p className="login-or-register-button fst-italic">
-              Don't you have an account?{" "}
-              <a className="link" onClick={() => setIsRegisterPage(!isRegisterPage)}>
-                Register
-              </a>
-            </p>
+            <LoginPage
+              setToken={setToken}
+              setRooms={setRooms}
+              setMyNickname={setMyNickname}
+              setIsRegisterPage={setIsRegisterPage}
+            />
           )}
         </>
       )}

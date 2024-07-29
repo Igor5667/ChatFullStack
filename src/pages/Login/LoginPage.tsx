@@ -8,13 +8,14 @@ interface LoginData {
   password: string;
 }
 
-interface LoginFunctions {
+interface LoginParams {
   setToken: React.Dispatch<React.SetStateAction<string>>;
   setRooms: React.Dispatch<React.SetStateAction<Room[]>>;
   setMyNickname: React.Dispatch<React.SetStateAction<string>>;
+  setIsRegisterPage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function LoginPage({ setToken, setRooms, setMyNickname }: LoginFunctions) {
+function LoginPage({ setToken, setRooms, setMyNickname, setIsRegisterPage }: LoginParams) {
   const [loginData, setLoginData] = useState<LoginData>({
     nickname: "",
     password: "",
@@ -70,31 +71,50 @@ function LoginPage({ setToken, setRooms, setMyNickname }: LoginFunctions) {
   };
 
   return (
-    <form
-      className="login-or-registration-form"
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
-      <h3>Logination</h3>
-      <input
-        type="text"
-        placeholder="login"
-        className="inputLogin"
-        value={loginData.nickname}
-        onChange={(e) => setLoginData({ ...loginData, nickname: e.target.value })}
-      />
-      <input
-        type="password"
-        placeholder="password"
-        className="inputLogin"
-        value={loginData.password}
-        onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-      />
-      <button className="btn btn-outline-dark" onClick={logIn}>
-        LogIn
-      </button>
-    </form>
+    <div className="login-page">
+      <form
+        className="login-or-registration-form"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <h3 className="mb-4">Login</h3>
+
+        <div className="form-floating mb-3">
+          <input
+            className="form-control"
+            id="floatingInput"
+            type="text"
+            placeholder="login"
+            value={loginData.nickname}
+            onChange={(e) => setLoginData({ ...loginData, nickname: e.target.value })}
+          />
+          <label htmlFor="floatingInput">login</label>
+        </div>
+
+        <div className="form-floating mb-3">
+          <input
+            className="form-control"
+            id="floatingInput"
+            type="email"
+            placeholder="email"
+            value={loginData.password}
+            onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+          />
+          <label htmlFor="floatingInput">email</label>
+        </div>
+
+        <button className="button-login  btn btn-outline-dark mt-2" onClick={logIn}>
+          LogIn
+        </button>
+        <p className="login-or-register-button fst-italic mt-4">
+          Don't you have an account?{" "}
+          <a className="link" onClick={() => setIsRegisterPage(true)}>
+            Register
+          </a>
+        </p>
+      </form>
+    </div>
   );
 }
 
