@@ -39,13 +39,36 @@ function App() {
   const [myNickname, setMyNickname] = useState<string>("");
   const [isRegisterPage, setIsRegisterPage] = useState<boolean>(false);
   const [isChatChoosen, setIsChatChoosen] = useState<boolean>(true);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      nickname: "Max",
+      content: "Hello world!",
+      sendDate: "15:25 26.07.2024",
+    },
+    {
+      nickname: "igor",
+      content: "Another hello world!",
+      sendDate: "15:25 26.07.2024",
+    },
+    {
+      nickname: "Max",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt auctor interdum. Pellentesque pharetra sodales neque, at tincidunt erat congue a. Maecenas a tincidunt augue. In hac habitasse platea dictumst. Maecenas faucibus velit purus, vel efficitur justo interdum ut.",
+      sendDate: "15:25 26.07.2024",
+    },
+    {
+      nickname: "igor",
+      content:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt auctor interdum. Pellentesque pharetra sodales neque, at tincidunt erat congue a. Maecenas a tincidunt augue. In hac habitasse platea dictumst. Maecenas faucibus velit purus, vel efficitur justo interdum ut.",
+      sendDate: "15:25 26.07.2024",
+    },
+  ]);
   const [rooms, setRooms] = useState<Room[]>([]);
   const [currentRoom, setCurrentRoom] = useState<Room>({ token: "fake token", name: "Max", isGroup: false });
   const [inviteReqests, setInviteRequests] = useState<string[]>([]);
 
   useEffect(() => {
-    socket.connect();
+    //socket.connect();
 
     socket.on("get:message", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
@@ -77,14 +100,32 @@ function App() {
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [messages]);
 
   const sendMessage = () => {
     if (newMessage.trim() !== "") {
-      const messageData = { nickname: myNickname, content: newMessage, token: currentRoom.token };
-      socket.emit("send:message", messageData);
-      // setMessages((messages) => [...messages, { nickname: "Igor", content: newMessage, sendDate: "" }]);  //for dev
+      // with server
+      // const messageData = { nickname: myNickname, content: newMessage, token: currentRoom.token };
+      // socket.emit("send:message", messageData);
+
+      // with only front-end
+      const now = new Date();
+
+      const formattedDate = now.toLocaleDateString("pl-PL", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+
+      const formattedTime = now.toLocaleTimeString("pl-PL", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+
+      const result = `${formattedTime} ${formattedDate}`;
+      setMessages((messages) => [...messages, { nickname: "igor", content: newMessage, sendDate: result }]);
       setNewMessage("");
+      scrollToBottom();
     }
   };
 
