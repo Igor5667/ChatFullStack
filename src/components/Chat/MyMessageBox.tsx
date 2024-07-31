@@ -4,12 +4,16 @@ import { Message } from "../../App";
 
 interface MyMessageBoxProps {
   message: Message;
+  messageChainStatus: MessageChainStatusInterface;
+}
+
+interface MessageChainStatusInterface {
   isTheSamePerson: boolean;
   isLastOfMessageChain: boolean;
   isFirstOfMessageChain: boolean;
 }
 
-function MyMessageBox({ message, isTheSamePerson, isLastOfMessageChain, isFirstOfMessageChain }: MyMessageBoxProps) {
+function MyMessageBox({ message, messageChainStatus }: MyMessageBoxProps) {
   const [isShownDate, setIsShownDate] = useState<boolean>(false);
   const timeoutRef = useRef<number | null>(null);
 
@@ -30,15 +34,15 @@ function MyMessageBox({ message, isTheSamePerson, isLastOfMessageChain, isFirstO
     <div className="message-container d-flex flex-column align-items-end">
       <div className="">
         {isShownDate && <span>{message.sendDate}</span>}
-        {!isTheSamePerson && <span className="text-end ms-2 "> {message.nickname}</span>}
+        {!messageChainStatus.isTheSamePerson && <span className="text-end ms-2 "> {message.nickname}</span>}
       </div>
 
       <div
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
-        className={`message my-message ms-5 ${isTheSamePerson && "same-person-messages"} ${
-          isLastOfMessageChain && "last-of-message-chain"
-        } ${isFirstOfMessageChain && "first-of-message-chain"}`}
+        className={`message my-message ms-5 ${messageChainStatus.isTheSamePerson && "same-person-messages"} ${
+          messageChainStatus.isLastOfMessageChain && "last-of-message-chain"
+        } ${messageChainStatus.isFirstOfMessageChain && "first-of-message-chain"}`}
       >
         {message.content}
       </div>
