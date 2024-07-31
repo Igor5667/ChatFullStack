@@ -1,8 +1,15 @@
 import React, { useRef, useState } from "react";
 import "./Chat.css";
 import { Message } from "../../App";
+import { MessageChainStatusInterface } from "./Chat";
 
-function OthersMessageBox({ message }: { message: Message }) {
+function OthersMessageBox({
+  message,
+  messageChainStatus,
+}: {
+  message: Message;
+  messageChainStatus: MessageChainStatusInterface;
+}) {
   const [isShownDate, setIsShownDate] = useState<boolean>(false);
   const timeoutRef = useRef<number | null>(null);
 
@@ -14,7 +21,7 @@ function OthersMessageBox({ message }: { message: Message }) {
 
   const handleMouseOut = () => {
     if (timeoutRef.current !== null) {
-      clearTimeout(timeoutRef.current); // Wyczyść timeout jeśli istnieje
+      clearTimeout(timeoutRef.current);
     }
     setIsShownDate(false);
   };
@@ -22,11 +29,17 @@ function OthersMessageBox({ message }: { message: Message }) {
   return (
     <div className="message-container d-flex flex-column align-items-start">
       <div>
-        <span>{message.nickname} </span>
+        {!messageChainStatus.isTheSamePerson && <span>{message.nickname} </span>}
         {isShownDate && <span>{message.sendDate}</span>}
       </div>
 
-      <div onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} className={"message other-message "}>
+      <div
+        onMouseOver={handleMouseOver}
+        onMouseOut={handleMouseOut}
+        className={`message other-message ${messageChainStatus.isTheSamePerson && "same-person-messages-other"} ${
+          messageChainStatus.isLastOfMessageChain && "last-of-message-chain-other"
+        } ${messageChainStatus.isFirstOfMessageChain && "first-of-message-chain-other"}`}
+      >
         {message.content}
       </div>
     </div>

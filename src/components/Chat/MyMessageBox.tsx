@@ -1,16 +1,11 @@
 import React, { useRef, useState } from "react";
 import "./Chat.css";
 import { Message } from "../../App";
+import { MessageChainStatusInterface } from "./Chat";
 
 interface MyMessageBoxProps {
   message: Message;
   messageChainStatus: MessageChainStatusInterface;
-}
-
-interface MessageChainStatusInterface {
-  isTheSamePerson: boolean;
-  isLastOfMessageChain: boolean;
-  isFirstOfMessageChain: boolean;
 }
 
 function MyMessageBox({ message, messageChainStatus }: MyMessageBoxProps) {
@@ -40,9 +35,9 @@ function MyMessageBox({ message, messageChainStatus }: MyMessageBoxProps) {
       <div
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
-        className={`message my-message ms-5 ${messageChainStatus.isTheSamePerson && "same-person-messages"} ${
-          messageChainStatus.isLastOfMessageChain && "last-of-message-chain"
-        } ${messageChainStatus.isFirstOfMessageChain && "first-of-message-chain"}`}
+        className={`message my-message ms-5 ${messageChainStatus.isTheSamePerson && "same-person-messages-my"} ${
+          messageChainStatus.isLastOfMessageChain && "last-of-message-chain-my"
+        } ${messageChainStatus.isFirstOfMessageChain && "first-of-message-chain-my"}`}
       >
         {message.content}
       </div>

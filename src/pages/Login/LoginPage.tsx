@@ -101,7 +101,7 @@ function LoginPage({ setToken, setRooms, setMyNickname, setIsRegisterPage }: Log
             value={loginData.password}
             onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
           />
-          <label htmlFor="floatingInput">email</label>
+          <label htmlFor="floatingInput">password</label>
         </div>
 
         <button className="button-login  btn btn-outline-dark mt-2" onClick={logIn}>

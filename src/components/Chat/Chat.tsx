@@ -4,12 +4,18 @@ import MyMessageBox from "./MyMessageBox";
 import "bootstrap/dist/css/bootstrap.min.css";
 import OthersMessageBox from "./OthersMessageBox";
 
+export interface MessageChainStatusInterface {
+  isTheSamePerson: boolean;
+  isLastOfMessageChain: boolean;
+  isFirstOfMessageChain: boolean;
+}
+
 function Chat({ messages, myNickname }: { messages: Message[]; myNickname: string }) {
   return (
     <>
       <div className="scroll-area">
         {messages.map((message, index) => {
-          const messageChainStatus = {
+          const messageChainStatus: MessageChainStatusInterface = {
             isTheSamePerson: index > 0 && message.nickname === messages[index - 1].nickname,
             isLastOfMessageChain: !(index < messages.length - 1 && message.nickname === messages[index + 1].nickname),
             isFirstOfMessageChain:
@@ -20,7 +26,7 @@ function Chat({ messages, myNickname }: { messages: Message[]; myNickname: strin
           if (message.nickname === myNickname) {
             return <MyMessageBox message={message} key={index} messageChainStatus={messageChainStatus} />;
           } else {
-            return <OthersMessageBox message={message} key={index} />;
+            return <OthersMessageBox message={message} key={index} messageChainStatus={messageChainStatus} />;
           }
         })}
       </div>

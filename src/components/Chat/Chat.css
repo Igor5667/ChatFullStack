@@ -25,12 +25,25 @@
 .scroll-area::-webkit-scrollbar {
   display: none;
 }
-.same-person-messages {
+
+/* my messages chain attributes */
+.same-person-messages-my {
   border-bottom-right-radius: 0;
 }
-.last-of-message-chain {
+.last-of-message-chain-my {
   border-bottom-right-radius: 15px;
 }
-.first-of-message-chain {
+.first-of-message-chain-my {
   border-bottom-right-radius: 0;
+}
+
+/* oher people messages chain attributes */
+.same-person-messages-other {
+  border-bottom-left-radius: 0;
+}
+.last-of-message-chain-other {
+  border-bottom-left-radius: 15px;
+}
+.first-of-message-chain-other {
+  border-bottom-left-radius: 0;
 }
