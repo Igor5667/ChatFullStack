@@ -26,13 +26,12 @@ export interface Room {
 }
 
 // TO DO
-// handle data aby sie wyswietlala tylko godzina i minuta jezeli to dzisij
-// wyswietla sie dzien tygodnia jezeli to ten tydzien
-// wyswietla sie dały date jezeli ponad tydzien
-// ladnie zrobic login page and registration
-// zrobić aby się wyświetlał jeden nick gdy wiadomosci są pod sobą
 // add group formularz
 // scroll area na friends i groups
+// handle data aby sie wyswietlala tylko godzina i minuta jezeli to dzisij, wyswietla sie dzien tygodnia i godzina jezeli to ten tydzien, wyswietla sie cały date jezeli ponad tydzien
+// zrobić aby się wyświetlał jeden nick gdy wiadomosci są pod sobą
+// usuwanie znajomego
+// jezeli wejde za wysoko w konwersacji to zrob slide to bottom przycisk
 
 function App() {
   const [newMessage, setNewMessage] = useState<string>("");

@@ -9,8 +9,22 @@ function Chat({ messages, myNickname }: { messages: Message[]; myNickname: strin
     <>
       <div className="scroll-area">
         {messages.map((message, index) => {
+          const isTheSamePerson = index > 0 && message.nickname === messages[index - 1].nickname;
+          const isLastOfMessageChain = !(index < messages.length - 1 && message.nickname === messages[index + 1].nickname);
+          const isFirstOfMessageChain =
+            (index === 0 || message.nickname !== messages[index - 1].nickname) &&
+            index < messages.length - 1 &&
+            message.nickname === messages[index + 1].nickname;
           if (message.nickname === myNickname) {
-            return <MyMessageBox message={message} key={index} />;
+            return (
+              <MyMessageBox
+                message={message}
+                key={index}
+                isTheSamePerson={isTheSamePerson}
+                isLastOfMessageChain={isLastOfMessageChain}
+                isFirstOfMessageChain={isFirstOfMessageChain}
+              />
+            );
           } else {
             return <OthersMessageBox message={message} key={index} />;
           }

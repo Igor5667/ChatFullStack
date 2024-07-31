@@ -25,3 +25,12 @@
 .scroll-area::-webkit-scrollbar {
   display: none;
 }
+.same-person-messages {
+  border-bottom-right-radius: 0;
+}
+.last-of-message-chain {
+  border-bottom-right-radius: 15px;
+}
+.first-of-message-chain {
+  border-bottom-right-radius: 0;
+}
