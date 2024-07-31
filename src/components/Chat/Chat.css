@@ -6,6 +6,9 @@
   padding: 0 40px;
   scrollbar-width: none;
 }
+.message-container .message-nickname {
+  font-size: 1.3em;
+}
 .message {
   padding: 8px;
   border-radius: 15px;

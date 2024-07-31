@@ -29,7 +29,6 @@ export interface Room {
 // add group formularz
 // scroll area na friends i groups
 // handle data aby sie wyswietlala tylko godzina i minuta jezeli to dzisij, wyswietla sie dzien tygodnia i godzina jezeli to ten tydzien, wyswietla sie cały date jezeli ponad tydzien
-// zrobić aby się wyświetlał jeden nick gdy wiadomosci są pod sobą
 // usuwanie znajomego
 // jezeli wejde za wysoko w konwersacji to zrob slide to bottom przycisk
 
@@ -42,25 +41,33 @@ function App() {
   const [messages, setMessages] = useState<Message[]>([
     {
       nickname: "Max",
-      content: "Hello world!",
-      sendDate: "15:25 26.07.2024",
+      content: "Hejka!",
+      sendDate: "21:21 2022-06-30",
     },
     {
       nickname: "igor",
-      content: "Another hello world!",
-      sendDate: "15:25 26.07.2024",
+      content: "No cześć co tam",
+      sendDate: "02:14 2024-06-12",
     },
     {
       nickname: "Max",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt auctor interdum. Pellentesque pharetra sodales neque, at tincidunt erat congue a. Maecenas a tincidunt augue. In hac habitasse platea dictumst. Maecenas faucibus velit purus, vel efficitur justo interdum ut.",
-      sendDate: "15:25 26.07.2024",
+      content: "Mogłbyś mi pomóc?",
+      sendDate: "22:21 2024-07-29",
+    },
+    {
+      nickname: "Max",
+      content: "Konkretnie mam do przeniesienia trochę gruzu i chciałbym abyś mi pomógł na moim ogródku",
+      sendDate: "22:22 2024-07-29",
     },
     {
       nickname: "igor",
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In tincidunt auctor interdum. Pellentesque pharetra sodales neque, at tincidunt erat congue a. Maecenas a tincidunt augue. In hac habitasse platea dictumst. Maecenas faucibus velit purus, vel efficitur justo interdum ut.",
-      sendDate: "15:25 26.07.2024",
+      content: "No spoko",
+      sendDate: "11:11 2024-07-31",
+    },
+    {
+      nickname: "igor",
+      content: "Wpadnę jutro",
+      sendDate: "11:12 2024-07-31",
     },
   ]);
   const [rooms, setRooms] = useState<Room[]>([]);
@@ -110,9 +117,10 @@ function App() {
 
       // with only front-end
 
-      moment.locale("pl");
-      const result = moment().format("HH:mm DD.MM.YYYY");
-      setMessages((messages) => [...messages, { nickname: "igor", content: newMessage, sendDate: result }]);
+      setMessages((messages) => [
+        ...messages,
+        { nickname: "igor", content: newMessage, sendDate: moment().format("HH:mm:ss YYYY-MM-DD") },
+      ]);
       setNewMessage("");
       scrollToBottom();
     }

@@ -29,7 +29,7 @@ function MyMessageBox({ message, messageChainStatus }: MyMessageBoxProps) {
     <div className="message-container d-flex flex-column align-items-end">
       <div className="">
         {isShownDate && <span>{message.sendDate}</span>}
-        {!messageChainStatus.isTheSamePerson && <span className="text-end ms-2 "> {message.nickname}</span>}
+        {!messageChainStatus.isTheSamePerson && <span className="message-nickname  text-end ms-2 "> {message.nickname}</span>}
       </div>
 
       <div

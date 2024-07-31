@@ -29,7 +29,7 @@ function OthersMessageBox({
   return (
     <div className="message-container d-flex flex-column align-items-start">
       <div>
-        {!messageChainStatus.isTheSamePerson && <span>{message.nickname} </span>}
+        {!messageChainStatus.isTheSamePerson && <span className="message-nickname">{message.nickname} </span>}
         {isShownDate && <span>{message.sendDate}</span>}
       </div>
 
